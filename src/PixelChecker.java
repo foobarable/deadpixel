@@ -15,7 +15,7 @@ public class PixelChecker {
 
 	private static final long serialVersionUID = 1L;
 	private File inputFile;
-	private ArrayList<String> output;
+	private ArrayList<String> output=null;
 	private JProgressBar progress;
 	private static final boolean verbose = true; 
 	
@@ -27,6 +27,8 @@ public class PixelChecker {
 		System.out.println("Created pixelchecker class");
 		inputData = new int[dim.width][dim.height];
 		if(verbose) System.out.println("Width: " + dim.width + " Heigth: " + dim.height);
+		System.out.println("Trying to read file");
+		readFile();
 	}
 	
 	
@@ -59,15 +61,23 @@ public class PixelChecker {
 	}
 	
 	
-	public void checkPixel(int checkboxrange)  {
-		this.readFile();
-		
-		
-		
+	public void checkPixel(int progressrange)  {
+		output = new ArrayList<String>();
+		output.add("Foo");
 	}
 	
 	
 	public String toString() {
 		return inputFile.toString();
+	}
+
+
+	public String getOutput() {
+		return output.toString();
+	}
+
+
+	public void setOutput(ArrayList<String> output) {
+		this.output = output;
 	}
 }
