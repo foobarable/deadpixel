@@ -103,6 +103,7 @@ public class DeadPixels extends javax.swing.JFrame {
 				pMain.setPreferredSize(new java.awt.Dimension(678, 369));
 				{
 					listmodel = new DefaultListModel<PixelChecker>();
+					listmodel.addElement(new PixelChecker(new File("/home/milk/workspace/deadpixel/vollstaendig.csv"), pbProgress, new Dimension(1920,1080)));
 					jList1 = new JList<PixelChecker>(listmodel);
 
 				}

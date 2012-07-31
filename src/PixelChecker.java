@@ -76,47 +76,43 @@ public class PixelChecker {
 	if (verbose)
 	    System.out.println("Checking pixel.. lookahead is " + lookahead
 		    + ", threshold is " + threshold);
-	for (int i = 0; i < dimension.width - lookahead; i++) {
-	    for (int j = 0; j < dimension.height - lookahead; j++) {
+	for (int i = 0; i < dimension.width; i++) {
+	    for (int j = 0; j < dimension.height; j++) {
 		for (int k = 1; k < lookahead + 1; k++) {
-		    if (inputData[i + k][j] != 0) {
-			if (((float) inputData[i][j]) / ((float) inputData[i + k][j]) < threshold) {
-			    output += ("(" + i + "|" + (dimension.height - j) + ")\n");
-			    this.horizontalCount++;
-			    if (verbose) System.out
-					.println("Found dead pixel next to this one at ("
-						+ i
-						+ "|"
-						+ (dimension.height - j)
-						+ ") "
-						+ (inputData[i][j])
-						+ " / "
-						+ inputData[i + k][j]
-						+ " = "
-						+ (float) inputData[i][j]
-						/ (float) inputData[i + k][j]);
-
-			    break;
+		    if (i<dimension.width-lookahead) {
+		   	if (inputData[i + k][j] != 0) {
+			    if (((float) inputData[i][j]) / ((float) inputData[i + k][j]) < threshold) {
+				output += ("(" + i + "|" + (dimension.height - j) + ")\n");
+				this.horizontalCount++;
+				if (verbose) System.out.println("Found dead pixel next to this one at ("+ i+ "|"+ (dimension.height - j)+ ") "+ (inputData[i][j])+ " / "+ inputData[i + k][j]+ " = "+ (float) inputData[i][j]/ (float) inputData[i + k][j]);
+				break;
+			    }
+			}
+			else {
+			    if (((float) inputData[i][j]) / ((float) inputData[i - k][j]) < threshold) {
+				output += ("(" + i + "|" + (dimension.height - j) + ")\n");
+				this.horizontalCount++;
+				if (verbose) System.out.println("Found dead pixel next to this one at ("+ i+ "|"+ (dimension.height - j)+ ") "+ (inputData[i][j])+ " / "+ inputData[i - k][j]+ " = "+ (float) inputData[i][j]/ (float) inputData[i - k][j]);
+				break;
+			    }
 			}
 		    }
-		    if (inputData[i][j + k] != 0) {
-			if (((float) inputData[i][j]) / ((float) inputData[i][j + k]) < threshold) {
-			    output += ("(" + i + "|" + (dimension.height - j) + ")\n");
-			    this.verticalCount++;
-			    if (verbose)
-				System.out
-					.println("Found dead pixel below this one at ("
-						+ i
-						+ "|"
-						+ (dimension.height - j)
-						+ ") "
-						+ (inputData[i][j])
-						+ " / "
-						+ inputData[i][j + k]
-						+ " = "
-						+ ((float) inputData[i][j] / (float) inputData[i][j
-							+ k]));
-			    break;
+		    if(j<dimension.height-lookahead) {
+			if (inputData[i][j + k] != 0) {
+			    if (((float) inputData[i][j]) / ((float) inputData[i][j + k]) < threshold) {
+				output += ("(" + i + "|" + (dimension.height - j) + ")\n");
+				this.verticalCount++;
+				if (verbose)System.out.println("Found dead pixel below this one at ("+ i+ "|"+ (dimension.height - j)+ ") "+ (inputData[i][j])+ " / "+ inputData[i][j + k]+ " = "+ ((float) inputData[i][j] / (float) inputData[i][j+ k]));
+				break;
+			    }    
+			}
+			else {
+			    if (((float) inputData[i][j]) / ((float) inputData[i][j - k]) < threshold) {
+				output += ("(" + i + "|" + (dimension.height - j) + ")\n");
+				this.verticalCount++;
+				if (verbose)System.out.println("Found dead pixel below this one at ("+ i+ "|"+ (dimension.height - j)+ ") "+ (inputData[i][j])+ " / "+ inputData[i][j + k]+ " = "+ ((float) inputData[i][j] / (float) inputData[i][j+ k]));
+				break;
+			    }   
 			}
 		    }
 		}
