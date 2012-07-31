@@ -37,6 +37,8 @@ public class DeadPixels extends javax.swing.JFrame {
 	private JButton jButton1;
 	private JFileChooser jFileChooser1;
 	private JCheckBox jCheckBox1;
+	private JLabel lTimeView;
+	private JLabel lTime;
 	private JTextArea taOutput;
 	private JLabel lVerticalCountView;
 	private JLabel lCountVertical;
@@ -76,6 +78,19 @@ public class DeadPixels extends javax.swing.JFrame {
 		initGUI();
 	}
 
+	private void updateGUI() {
+		if (listmodel.elementAt(jList1.getSelectedIndex()).getOutput() != null) {
+			this.taOutput.setText(listmodel.elementAt(
+					jList1.getSelectedIndex()).getOutput());
+			this.lDeadPixelCountView.setText(Integer.toString(listmodel.getElementAt(jList1.getSelectedIndex()).getDeadPixelCount()));
+			this.lHorizontalCountView.setText(Integer.toString(listmodel.getElementAt(jList1.getSelectedIndex()).getHorizontalCount()));
+			this.lVerticalCountView.setText(Integer.toString(listmodel.getElementAt(jList1.getSelectedIndex()).getVerticalCount()));
+			this.lTimeView.setText(Long.toString(listmodel.getElementAt(jList1.getSelectedIndex()).getTime())+ " ms");
+		}
+		
+	}
+	
+	
 	private void initGUI() {
 		try {
 
@@ -204,13 +219,8 @@ public class DeadPixels extends javax.swing.JFrame {
 						.parseFloat(this.jTextField1.getText()), Integer
 						.parseInt(this.jTextField2.getText()));
 			}
-			if (listmodel.elementAt(jList1.getSelectedIndex()).getOutput() != null) {
-				this.taOutput.setText(listmodel.elementAt(
-						jList1.getSelectedIndex()).getOutput());
-				this.lDeadPixelCountView.setText(Integer.toString(listmodel.getElementAt(jList1.getSelectedIndex()).getDeadPixelCount()));
-				this.lHorizontalCountView.setText(Integer.toString(listmodel.getElementAt(jList1.getSelectedIndex()).getHorizontalCount()));
-				this.lVerticalCountView.setText(Integer.toString(listmodel.getElementAt(jList1.getSelectedIndex()).getVerticalCount()));
-			}
+			this.updateGUI();
+			
 		}
 	}
 
@@ -253,12 +263,10 @@ public class DeadPixels extends javax.swing.JFrame {
 				.addContainerGap());
 			jPanel1Layout.setVerticalGroup(jPanel1Layout.createSequentialGroup()
 				.addGap(8)
-				.addGroup(jPanel1Layout.createParallelGroup()
-				    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-				        .addComponent(getJLabel1x(), GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-				        .addGap(19))
-				    .addComponent(jButton1, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(jButton2, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+				.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+				    .addComponent(jButton1, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+				    .addComponent(getJLabel1x(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+				    .addComponent(jButton2, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
 				.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 				.addComponent(getJList1(), 0, 179, Short.MAX_VALUE)
 				.addContainerGap());
@@ -277,8 +285,14 @@ public class DeadPixels extends javax.swing.JFrame {
 			jPanel3Layout1.setHorizontalGroup(jPanel3Layout1.createSequentialGroup()
 				.addContainerGap()
 				.addGroup(jPanel3Layout1.createParallelGroup()
-				    .addGroup(GroupLayout.Alignment.LEADING, jPanel3Layout1.createSequentialGroup()
-				        .addComponent(getJLabel2(), 0, 153, Short.MAX_VALUE)
+				    .addGroup(jPanel3Layout1.createSequentialGroup()
+				        .addGroup(jPanel3Layout1.createParallelGroup()
+				            .addComponent(getJLabel2(), GroupLayout.Alignment.LEADING, 0, 160, Short.MAX_VALUE)
+				            .addGroup(GroupLayout.Alignment.LEADING, jPanel3Layout1.createSequentialGroup()
+				                .addComponent(getLTime(), GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+				                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+				                .addComponent(getLTimeView(), GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
+				                .addGap(0, 6, Short.MAX_VALUE)))
 				        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 				        .addGroup(jPanel3Layout1.createParallelGroup()
 				            .addGroup(GroupLayout.Alignment.LEADING, jPanel3Layout1.createSequentialGroup()
@@ -295,7 +309,7 @@ public class DeadPixels extends javax.swing.JFrame {
 				                .addGap(12))
 				            .addComponent(getLVerticalCountView(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 				            .addComponent(getLHorizontalCountView(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)))
-				    .addComponent(getJScrollPane1(), GroupLayout.Alignment.LEADING, 0, 310, Short.MAX_VALUE))
+				    .addComponent(getJScrollPane1(), GroupLayout.Alignment.LEADING, 0, 317, Short.MAX_VALUE))
 				.addGap(8));
 			jPanel3Layout1.setVerticalGroup(jPanel3Layout1.createSequentialGroup()
 				.addContainerGap()
@@ -306,7 +320,9 @@ public class DeadPixels extends javax.swing.JFrame {
 				.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 				.addGroup(jPanel3Layout1.createParallelGroup(GroupLayout.Alignment.BASELINE)
 				    .addComponent(getLCountVertical(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(getLVerticalCountView(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+				    .addComponent(getLVerticalCountView(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+				    .addComponent(getLTime(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+				    .addComponent(getLTimeView(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
 				.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 				.addGroup(jPanel3Layout1.createParallelGroup(GroupLayout.Alignment.BASELINE)
 				    .addComponent(getLCountHorizontal(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
@@ -374,16 +390,19 @@ public class DeadPixels extends javax.swing.JFrame {
 				jButton4.setText("Save selected");
 			}
 			jPanel4Layout.setHorizontalGroup(jPanel4Layout.createSequentialGroup()
+				.addGap(7)
 				.addGroup(jPanel4Layout.createParallelGroup()
 				    .addGroup(jPanel4Layout.createSequentialGroup()
 				        .addGroup(jPanel4Layout.createParallelGroup()
-				            .addComponent(getLThreshold(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-				            .addComponent(getPWidth(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))
+				            .addComponent(getLThreshold(), GroupLayout.Alignment.LEADING, 0, 72, Short.MAX_VALUE)
+				            .addComponent(getPWidth(), GroupLayout.Alignment.LEADING, 0, 72, Short.MAX_VALUE))
 				        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 				        .addGroup(jPanel4Layout.createParallelGroup()
 				            .addComponent(getJTextField1(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
 				            .addComponent(getTfWidth(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)))
-				    .addComponent(jButton4, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
+				    .addGroup(jPanel4Layout.createSequentialGroup()
+				        .addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+				        .addGap(0, 0, Short.MAX_VALUE)))
 				.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 				.addGroup(jPanel4Layout.createParallelGroup()
 				    .addGroup(jPanel4Layout.createSequentialGroup()
@@ -395,28 +414,28 @@ public class DeadPixels extends javax.swing.JFrame {
 				            .addComponent(getJTextField3(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)))
 				    .addComponent(getJCheckBox1(), GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE))
 				.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-				.addComponent(jButton3, 0, 268, Short.MAX_VALUE)
+				.addComponent(jButton3, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
 				.addContainerGap());
 			jPanel4Layout.setVerticalGroup(jPanel4Layout.createSequentialGroup()
-				.addContainerGap()
+				.addGap(6)
 				.addGroup(jPanel4Layout.createParallelGroup()
 				    .addGroup(jPanel4Layout.createSequentialGroup()
 				        .addGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 				            .addComponent(getJCheckBox1(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
 				            .addComponent(jButton4, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-				        .addGap(0, 25, GroupLayout.PREFERRED_SIZE)
+				        .addGap(35)
 				        .addGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 				            .addComponent(getJTextField3(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 				            .addComponent(getLHeigth(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 				            .addComponent(getTfWidth(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-				            .addComponent(getPWidth(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)))
+				            .addComponent(getPWidth(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)))
 				    .addGroup(GroupLayout.Alignment.LEADING, jPanel4Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-				        .addComponent(jButton3, GroupLayout.Alignment.BASELINE, 0, 71, Short.MAX_VALUE)
+				        .addComponent(jButton3, GroupLayout.Alignment.BASELINE, 0, 77, Short.MAX_VALUE)
 				        .addComponent(getJTextField2(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 				        .addComponent(getJLabel3(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 				        .addComponent(getJTextField1(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 				        .addComponent(getLThreshold(), GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)))
-				.addGap(7));
+				.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED));
 		}
 		return pOptions;
 	}
@@ -518,6 +537,22 @@ public class DeadPixels extends javax.swing.JFrame {
 			taOutput = new JTextArea();
 		}
 		return taOutput;
+	}
+	
+	private JLabel getLTime() {
+		if(lTime == null) {
+			lTime = new JLabel();
+			lTime.setText("Time:");
+		}
+		return lTime;
+	}
+	
+	private JLabel getLTimeView() {
+		if(lTimeView == null) {
+			lTimeView = new JLabel();
+			lTimeView.setText("0 ms ");
+		}
+		return lTimeView;
 	}
 
 }
