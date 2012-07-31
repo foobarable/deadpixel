@@ -29,9 +29,7 @@ public class PixelChecker {
 	this.dimension = dim;
 	System.out.println("Created pixelchecker class");
 	inputData = new int[dim.width][dim.height];
-	if (verbose)
-	    System.out
-		    .println("Width: " + dim.width + " Heigth: " + dim.height);
+	if (verbose) System.out.println("Width: " + dim.width + " Heigth: " + dim.height);
 	System.out.println("Trying to read file");
 	readFile();
     }

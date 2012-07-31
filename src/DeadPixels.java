@@ -7,6 +7,8 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -101,13 +103,7 @@ public class DeadPixels extends javax.swing.JFrame {
 				GroupLayout jPanel2Layout = new GroupLayout((JComponent) pMain);
 				pMain.setLayout(jPanel2Layout);
 				pMain.setPreferredSize(new java.awt.Dimension(678, 369));
-				{
-					listmodel = new DefaultListModel<PixelChecker>();
-					listmodel.addElement(new PixelChecker(new File("/home/milk/workspace/deadpixel/vollstaendig.csv"), pbProgress, new Dimension(1920,1080)));
-					jList1 = new JList<PixelChecker>(listmodel);
-
-				}
-
+				
 				{
 					pbProgress = new JProgressBar();
 					pbProgress.setStringPainted(true);
@@ -199,10 +195,16 @@ public class DeadPixels extends javax.swing.JFrame {
 
 	private JList<PixelChecker> getJList1() {
 		if (jList1 == null) {
-			DefaultListModel<PixelChecker> jList1Model = new DefaultListModel<PixelChecker>();
-			jList1 = new JList<PixelChecker>(jList1Model);
+			listmodel = new DefaultListModel<PixelChecker>();
+			listmodel.addElement(new PixelChecker(new File("/home/milk/workspace/deadpixel/vollstaendig.csv"), pbProgress, new Dimension(1920,1080)));
+			jList1 = new JList<PixelChecker>(listmodel);
 			jList1.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
+			jList1.addListSelectionListener(new ListSelectionListener() {
+			    public void valueChanged(ListSelectionEvent evt) {
+				jList1ValueChanged(evt);
+			    }
+			});
 		}
 		return jList1;
 	}
@@ -554,6 +556,11 @@ public class DeadPixels extends javax.swing.JFrame {
 			lTimeView.setText("0 ms ");
 		}
 		return lTimeView;
+	}
+	
+	private void jList1ValueChanged(ListSelectionEvent evt) {
+	    if(debug) System.out.println("jList1.valueChanged, event="+evt);
+	    this.updateGUI();
 	}
 
 }
